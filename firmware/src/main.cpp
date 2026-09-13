@@ -38,24 +38,31 @@ bool isValidDriver(uint32_t drv) {
 
 void displaySetup(bool swapBlueGreen, bool swapBlueRed, uint8_t displayBright, uint8_t displayRotation, uint8_t driver, uint32_t i2cSpeed, uint8_t E_pin)
 {
-  HUB75_I2S_CFG mxconfig(64, 64, 1);
+  HUB75_I2S_CFG::i2s_pins mxpins = {
+    25, 26, 27, 21, 22, 23,
+    12, 16, 17, 18, static_cast<int8_t>(E_pin),
+    4, 15, 14
+  };
+  HUB75_I2S_CFG mxconfig(64, 64, 1, mxpins);
 
   if (swapBlueGreen)
   {
-    // Swap Blue and Green pins because the panel is RBG instead of RGB.
-    mxconfig.gpio.b1 = 26;
-    mxconfig.gpio.b2 = 12;
-    mxconfig.gpio.g1 = 27;
-    mxconfig.gpio.g2 = 13;
+    uint8_t pin = mxconfig.gpio.b1;
+    mxconfig.gpio.b1 = mxconfig.gpio.g1;
+    mxconfig.gpio.g1 = pin;
+    pin = mxconfig.gpio.b2;
+    mxconfig.gpio.b2 = mxconfig.gpio.g2;
+    mxconfig.gpio.g2 = pin;
   }
 
   if (swapBlueRed)
   {
-    // Swap Blue and Red pins. 
-    mxconfig.gpio.b1 = 25;
-    mxconfig.gpio.b2 = 14;
-    mxconfig.gpio.r1 = 27;
-    mxconfig.gpio.r2 = 13;
+    uint8_t pin = mxconfig.gpio.b1;
+    mxconfig.gpio.b1 = mxconfig.gpio.r1;
+    mxconfig.gpio.r1 = pin;
+    pin = mxconfig.gpio.b2;
+    mxconfig.gpio.b2 = mxconfig.gpio.r2;
+    mxconfig.gpio.r2 = pin;
   }
 
   mxconfig.gpio.e = E_pin;
