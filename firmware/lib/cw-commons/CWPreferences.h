@@ -84,7 +84,7 @@ struct ClockwiseParams
 
     void load()
     {
-        swapBlueGreen = preferences.getBool(PREF_SWAP_BLUE_GREEN, false);
+        swapBlueGreen = preferences.getBool(PREF_SWAP_BLUE_GREEN, true);
         swapBlueRed = preferences.getBool(PREF_SWAP_BLUE_RED, false);
         use24hFormat = preferences.getBool(PREF_USE_24H_FORMAT, true);
         displayBright = preferences.getUInt(PREF_DISPLAY_BRIGHT, 32);
