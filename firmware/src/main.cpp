@@ -39,7 +39,7 @@ bool isValidDriver(uint32_t drv) {
 void displaySetup(bool swapBlueGreen, bool swapBlueRed, uint8_t displayBright, uint8_t displayRotation, uint8_t driver, uint32_t i2cSpeed, uint8_t E_pin)
 {
   HUB75_I2S_CFG::i2s_pins mxpins = {
-    25, 26, 27, 21, 22, 23,
+    26, 27, 25, 22, 23, 21,
     12, 16, 17, 18, static_cast<int8_t>(E_pin),
     4, 15, 14
   };
@@ -130,7 +130,7 @@ void setup()
   uint32_t i2cSpeed = ClockwiseParams::getInstance()->i2cSpeed;
   uint8_t E_pin = ClockwiseParams::getInstance()->E_pin;
   
-  displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->swapBlueRed, ClockwiseParams::getInstance()->displayBright, ClockwiseParams::getInstance()->displayRotation, driver, i2cSpeed, E_pin);
+  displaySetup(false, false, ClockwiseParams::getInstance()->displayBright, ClockwiseParams::getInstance()->displayRotation, driver, i2cSpeed, E_pin);
   clockface = new Clockface(dma_display);
 
   autoBrightEnabled = (ClockwiseParams::getInstance()->autoBrightMax > 0);
